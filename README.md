@@ -16,6 +16,4 @@ _Requisiti e dipendenze da completare._
 # istruzioni di avvio da completare
 ```
 
-## Autore
 
-Francesco Mascolo
