@@ -28,6 +28,7 @@
 
   --spazio-pagina: 4rem;
   --larghezza-contenuto: 68rem;
+  --griglia-min: 11rem;
 
   /* Colori dei tipi Pokémon */
   --tipo-normal: #a8a77a;
@@ -123,8 +124,158 @@ h3 {
   border: 0;
 }
 
+/* ---------------------------------------------------------------------------
+   Guscio di pagina condiviso da tutte le viste
+   --------------------------------------------------------------------------- */
+
+.pagina {
+  width: 100%;
+  max-width: var(--larghezza-contenuto);
+  margin: 0 auto;
+  padding: 4.5rem 1.25rem var(--spazio-pagina);
+}
+
+.intestazione {
+  max-width: 34rem;
+  margin-bottom: 3rem;
+}
+
+.occhiello {
+  display: inline-block;
+  margin: 0 0 0.875rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-pill);
+  background: var(--superficie);
+  color: var(--testo-tenue);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.intestazione h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 800;
+}
+
+.sottotitolo {
+  margin: 0;
+  color: var(--testo-tenue);
+  font-size: 1.0625rem;
+  text-wrap: pretty;
+}
+
+.indietro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-pill);
+  background: var(--superficie);
+  color: var(--testo-tenue);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 240ms var(--ease-out-quint),
+    border-color 240ms var(--ease-out-quint),
+    transform 240ms var(--ease-out-quint);
+}
+
+.indietro:hover {
+  color: var(--testo);
+  border-color: var(--hairline-forte);
+  transform: translateX(-2px);
+}
+
+.indietro:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accento) 42%, transparent);
+  outline-offset: 2px;
+}
+
+.griglia {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--griglia-min), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.griglia__voce {
+  display: flex;
+}
+
+/* Segnaposto animato mostrato durante il caricamento. */
+.scheletro {
+  position: relative;
+  flex: 1;
+  min-height: 8rem;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-lg);
+  background: #eceff5;
+}
+
+.scheletro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 80%), transparent);
+  animation: scheletro-scorrimento 1.5s infinite;
+}
+
+@keyframes scheletro-scorrimento {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.avviso {
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-lg);
+  background: var(--superficie);
+  color: var(--testo-tenue);
+}
+
+.avviso--errore {
+  border-color: color-mix(in srgb, var(--errore) 24%, transparent);
+  background: color-mix(in srgb, var(--errore) 6%, var(--superficie));
+  color: var(--errore);
+  font-weight: 600;
+}
+
+.avviso a {
+  color: inherit;
+}
+
+.avviso a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--errore) 45%, transparent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .indietro {
+    transition: none;
+  }
+
+  .indietro:hover {
+    transform: none;
+  }
+
+  .scheletro::after {
+    animation: none;
   }
 }

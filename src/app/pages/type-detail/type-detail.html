@@ -1,0 +1,52 @@
+<section class="pagina">
+  <a class="indietro" routerLink="/types">
+    <span aria-hidden="true">&larr;</span>
+    Tutti i tipi
+  </a>
+
+  @if (typeResource.isLoading()) {
+    <p class="sr-only" aria-live="polite">Caricamento dei Pokémon…</p>
+    <ul class="griglia griglia--pokemon" aria-hidden="true">
+      @for (segnaposto of placeholders; track segnaposto) {
+        <li class="griglia__voce">
+          <div class="scheletro"></div>
+        </li>
+      }
+    </ul>
+  } @else if (typeResource.error()) {
+    <p class="avviso avviso--errore" role="alert">
+      Impossibile caricare questa categoria. Torna a <a routerLink="/types">tutti i tipi</a> e
+      riprova.
+    </p>
+  } @else if (typeResource.value(); as tipo) {
+    <div [class]="'risultato tipo--' + tipo.name">
+      <header class="intestazione">
+        <p class="occhiello">PokéAPI &middot; /type/{{ tipo.name }}</p>
+        <h1>{{ tipo.name }}</h1>
+        <p class="sottotitolo">{{ tipo.pokemon.length }} Pokémon appartengono a questo tipo.</p>
+      </header>
+
+      @if (tipo.pokemon.length === 0) {
+        <p class="avviso">Nessun Pokémon associato a questa categoria.</p>
+      } @else {
+        <ul class="griglia griglia--pokemon">
+          @for (voce of tipo.pokemon; track voce.pokemon.name) {
+            <li class="griglia__voce">
+              <a class="pokemon" [routerLink]="['/pokemon', voce.pokemon.name]">
+                <img
+                  class="pokemon__sprite"
+                  [src]="spriteUrl(voce.pokemon.url)"
+                  alt=""
+                  width="96"
+                  height="96"
+                  loading="lazy"
+                />
+                <span class="pokemon__nome">{{ voce.pokemon.name }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+</section>
