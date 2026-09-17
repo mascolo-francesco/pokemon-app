@@ -1,0 +1,45 @@
+<section class="pagina">
+  <header class="intestazione">
+    <p class="occhiello">PokéAPI &middot; /type</p>
+    <h1>Tipi di Pokémon</h1>
+    <p class="sottotitolo">Scegli una categoria per vedere i Pokémon che ne fanno parte.</p>
+  </header>
+
+  @if (loading()) {
+    <p class="sr-only" aria-live="polite">Caricamento delle categorie…</p>
+    <ul class="griglia" aria-hidden="true">
+      @for (segnaposto of placeholders; track segnaposto) {
+        <li class="griglia__voce">
+          <div class="scheletro"></div>
+        </li>
+      }
+    </ul>
+  } @else if (error()) {
+    <p class="avviso avviso--errore" role="alert">{{ error() }}</p>
+  } @else if (types().length === 0) {
+    <p class="avviso">Nessuna categoria disponibile.</p>
+  } @else {
+    <ul class="griglia">
+      @for (type of types(); track type.name) {
+        <li class="griglia__voce">
+          <a
+            class="carta"
+            [class]="'carta tipo--' + type.name"
+            [routerLink]="['/types', type.name]"
+          >
+            <span class="carta__interno">
+              <span class="carta__testata">
+                <span class="carta__pallino" aria-hidden="true"></span>
+                <span class="carta__nome">{{ type.name }}</span>
+              </span>
+              <span class="carta__azione">
+                Vedi i Pokémon
+                <span class="carta__freccia" aria-hidden="true">&rarr;</span>
+              </span>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

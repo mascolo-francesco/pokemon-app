@@ -1,1 +1,130 @@
-/* You can add global styles to this file, and also import other style files */
+/* Stili globali dell'applicazione */
+
+:root {
+  color-scheme: light;
+
+  --sfondo: #f7f8fb;
+  --superficie: #ffffff;
+  --testo: #101827;
+  --testo-tenue: #5b6675;
+  --testo-debole: #8c96a6;
+
+  --hairline: rgb(16 24 39 / 8%);
+  --hairline-forte: rgb(16 24 39 / 16%);
+  --vetro: rgb(255 255 255 / 72%);
+
+  --accento: #2f6fed;
+  --errore: #b4232b;
+
+  --raggio-pill: 999px;
+  --raggio-xl: 26px;
+  --raggio-lg: 18px;
+
+  --ombra-soft: 0 1px 2px rgb(16 24 39 / 4%), 0 12px 28px -14px rgb(16 24 39 / 18%);
+  --ombra-lift: 0 2px 6px rgb(16 24 39 / 6%), 0 26px 46px -22px rgb(16 24 39 / 28%);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+
+  --spazio-pagina: 4rem;
+  --larghezza-contenuto: 68rem;
+
+  /* Colori dei tipi Pokémon */
+  --tipo-normal: #a8a77a;
+  --tipo-fire: #ee8130;
+  --tipo-water: #6390f0;
+  --tipo-electric: #f7d02c;
+  --tipo-grass: #7ac74c;
+  --tipo-ice: #96d9d6;
+  --tipo-fighting: #c22e28;
+  --tipo-poison: #a33ea1;
+  --tipo-ground: #e2bf65;
+  --tipo-flying: #a98ff3;
+  --tipo-psychic: #f95587;
+  --tipo-bug: #a6b91a;
+  --tipo-rock: #b6a136;
+  --tipo-ghost: #735797;
+  --tipo-dragon: #6f35fc;
+  --tipo-dark: #705746;
+  --tipo-steel: #b7b7ce;
+  --tipo-fairy: #d685ad;
+  --tipo-stellar: #3fa9c9;
+  --tipo-unknown: #9199a8;
+}
+
+/*
+ * Espone il colore del tipo come variabile locale, così ogni componente
+ * può usare `var(--colore-tipo)` senza duplicare la palette.
+ */
+.tipo--normal { --colore-tipo: var(--tipo-normal); }
+.tipo--fire { --colore-tipo: var(--tipo-fire); }
+.tipo--water { --colore-tipo: var(--tipo-water); }
+.tipo--electric { --colore-tipo: var(--tipo-electric); }
+.tipo--grass { --colore-tipo: var(--tipo-grass); }
+.tipo--ice { --colore-tipo: var(--tipo-ice); }
+.tipo--fighting { --colore-tipo: var(--tipo-fighting); }
+.tipo--poison { --colore-tipo: var(--tipo-poison); }
+.tipo--ground { --colore-tipo: var(--tipo-ground); }
+.tipo--flying { --colore-tipo: var(--tipo-flying); }
+.tipo--psychic { --colore-tipo: var(--tipo-psychic); }
+.tipo--bug { --colore-tipo: var(--tipo-bug); }
+.tipo--rock { --colore-tipo: var(--tipo-rock); }
+.tipo--ghost { --colore-tipo: var(--tipo-ghost); }
+.tipo--dragon { --colore-tipo: var(--tipo-dragon); }
+.tipo--dark { --colore-tipo: var(--tipo-dark); }
+.tipo--steel { --colore-tipo: var(--tipo-steel); }
+.tipo--fairy { --colore-tipo: var(--tipo-fairy); }
+.tipo--stellar { --colore-tipo: var(--tipo-stellar); }
+.tipo--unknown { --colore-tipo: var(--tipo-unknown); }
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--sfondo);
+  color: var(--testo);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* Visibile solo agli screen reader */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

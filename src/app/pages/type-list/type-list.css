@@ -1,0 +1,203 @@
+.pagina {
+  width: 100%;
+  max-width: var(--larghezza-contenuto);
+  margin: 0 auto;
+  padding: 4.5rem 1.25rem var(--spazio-pagina);
+}
+
+.intestazione {
+  max-width: 34rem;
+  margin-bottom: 3rem;
+}
+
+.occhiello {
+  display: inline-block;
+  margin: 0 0 0.875rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-pill);
+  background: var(--superficie);
+  color: var(--testo-tenue);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.intestazione h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 800;
+}
+
+.sottotitolo {
+  margin: 0;
+  color: var(--testo-tenue);
+  font-size: 1.0625rem;
+  text-wrap: pretty;
+}
+
+.griglia {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.griglia__voce {
+  display: flex;
+}
+
+/*
+ * "Doppio guscio": il contenitore esterno porta il colore del tipo e un bordo
+ * sottile, quello interno è la superficie bianca con raggio concentrico.
+ */
+.carta {
+  display: flex;
+  flex: 1;
+  padding: 5px;
+  border: 1px solid color-mix(in srgb, var(--colore-tipo, var(--accento)) 28%, transparent);
+  border-radius: var(--raggio-lg);
+  background: color-mix(in srgb, var(--colore-tipo, var(--accento)) 18%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 340ms var(--ease-out-quint),
+    box-shadow 340ms var(--ease-out-quint),
+    border-color 340ms var(--ease-out-quint),
+    background-color 340ms var(--ease-out-quint);
+}
+
+.carta__interno {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 6.5rem;
+  padding: 1rem 1.125rem;
+  border-radius: calc(var(--raggio-lg) - 5px);
+  background: var(--superficie);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 85%);
+}
+
+.carta__testata {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.carta__pallino {
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--colore-tipo, var(--accento));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--colore-tipo, var(--accento)) 22%, transparent);
+}
+
+.carta__nome {
+  overflow: hidden;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.carta__azione {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--testo-tenue);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.carta__freccia {
+  display: inline-block;
+  transition: transform 340ms var(--ease-spring);
+}
+
+.carta:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--colore-tipo, var(--accento)) 62%, transparent);
+  box-shadow: var(--ombra-lift);
+}
+
+.carta:hover .carta__freccia {
+  transform: translateX(3px);
+}
+
+.carta:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.carta:focus-visible {
+  outline: 3px solid var(--colore-tipo, var(--accento));
+  outline-offset: 3px;
+}
+
+.scheletro {
+  position: relative;
+  flex: 1;
+  min-height: 8rem;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-lg);
+  background: #eceff5;
+}
+
+.scheletro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 80%), transparent);
+  animation: scheletro-scorrimento 1.5s infinite;
+}
+
+@keyframes scheletro-scorrimento {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.avviso {
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--raggio-lg);
+  background: var(--superficie);
+  color: var(--testo-tenue);
+}
+
+.avviso--errore {
+  border-color: color-mix(in srgb, var(--errore) 24%, transparent);
+  background: color-mix(in srgb, var(--errore) 6%, var(--superficie));
+  color: var(--errore);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carta,
+  .carta__freccia {
+    transition: none;
+  }
+
+  .carta:hover {
+    transform: none;
+  }
+
+  .carta:hover .carta__freccia {
+    transform: none;
+  }
+
+  .scheletro::after {
+    animation: none;
+  }
+}
