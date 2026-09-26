@@ -32,7 +32,7 @@ describe('PokeApi', () => {
       typeNames = response.results.map((type) => type.name);
     });
 
-    const request = httpTesting.expectOne('https://pokeapi.co/api/v2/type');
+    const request = httpTesting.expectOne('https://pokeapi.co/api/v2/type?limit=100');
     expect(request.request.method).toBe('GET');
 
     request.flush({
@@ -76,5 +76,36 @@ describe('PokeApi', () => {
     });
 
     expect(pokemonNames).toEqual(['charmander']);
+  });
+
+  it('should request a single pokemon by name', () => {
+    let name: string | undefined;
+
+    service.getPokemon('sandslash').subscribe((response) => {
+      name = response.name;
+    });
+
+    const request = httpTesting.expectOne('https://pokeapi.co/api/v2/pokemon/sandslash');
+    expect(request.request.method).toBe('GET');
+
+    request.flush({
+      id: 28,
+      name: 'sandslash',
+      height: 10,
+      weight: 295,
+      base_experience: 158,
+      abilities: [],
+      sprites: {
+        front_default: null,
+        front_shiny: null,
+        back_default: null,
+        back_shiny: null,
+        other: null,
+      },
+      stats: [],
+      types: [],
+    });
+
+    expect(name).toBe('sandslash');
   });
 });

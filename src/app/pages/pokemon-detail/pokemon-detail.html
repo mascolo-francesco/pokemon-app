@@ -1,0 +1,100 @@
+<section class="pagina">
+  <a class="indietro" routerLink="/types">
+    <span aria-hidden="true">&larr;</span>
+    Tutti i tipi
+  </a>
+
+  @if (pokemonResource.isLoading()) {
+    <p class="sr-only" aria-live="polite">Caricamento dei dettagli…</p>
+    <div class="scheletro scheletro--scheda" aria-hidden="true"></div>
+  } @else if (pokemonResource.error()) {
+    <p class="avviso avviso--errore" role="alert">
+      Impossibile caricare questo Pokémon. Torna a <a routerLink="/types">tutti i tipi</a> e riprova.
+    </p>
+  } @else if (pokemonResource.value(); as pokemon) {
+    <article [class]="'scheda tipo--' + primaryType(pokemon)">
+      <header class="testata">
+        <div class="arte">
+          @if (artworkUrl(pokemon); as artwork) {
+            <img
+              class="arte__sprite"
+              [src]="artwork"
+              [alt]="pokemon.name"
+              width="320"
+              height="320"
+              fetchpriority="high"
+            />
+          }
+        </div>
+
+        <div class="identita">
+          <p class="occhiello">PokéAPI &middot; /pokemon/{{ pokemon.name }}</p>
+          <h1>{{ pokemon.name }}</h1>
+          <p class="numero">N. {{ pokemon.id }}</p>
+
+          <ul class="tipi">
+            @for (slot of pokemon.types; track slot.type.name) {
+              <li [class]="'tipo tipo--' + slot.type.name">{{ slot.type.name }}</li>
+            }
+          </ul>
+        </div>
+      </header>
+
+      <dl class="misure">
+        <div class="misura">
+          <dt>Altezza</dt>
+          <dd>{{ heightInMetres(pokemon) }} m</dd>
+        </div>
+        <div class="misura">
+          <dt>Peso</dt>
+          <dd>{{ weightInKg(pokemon) }} kg</dd>
+        </div>
+        <div class="misura">
+          <dt>Esperienza base</dt>
+          <dd>{{ pokemon.base_experience ?? '—' }}</dd>
+        </div>
+      </dl>
+
+      <section class="blocco">
+        <h2>Abilità</h2>
+        <ul class="abilita">
+          @for (ability of pokemon.abilities; track ability.ability.name) {
+            <li class="abilita__voce">
+              {{ ability.ability.name }}
+              @if (ability.is_hidden) {
+                <span class="abilita__nascosta">nascosta</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="blocco">
+        <h2>Statistiche</h2>
+        <ul class="statistiche">
+          @for (stat of pokemon.stats; track stat.stat.name) {
+            <li class="statistica">
+              <span class="statistica__nome">{{ statLabel(stat.stat.name) }}</span>
+              <span class="statistica__barra">
+                <span
+                  class="statistica__riempimento"
+                  [style.--riempimento]="statRatio(stat.base_stat)"
+                ></span>
+              </span>
+              <span class="statistica__valore">{{ stat.base_stat }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+
+      @if (pokemon.cries?.latest; as cry) {
+        <section class="blocco">
+          <h2>Verso</h2>
+          <audio class="verso" controls [src]="cry">
+            Il tuo browser non supporta la riproduzione audio.
+          </audio>
+        </section>
+      }
+    </article>
+  }
+</section>

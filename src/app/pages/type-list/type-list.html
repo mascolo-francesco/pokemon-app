@@ -22,11 +22,7 @@
     <ul class="griglia">
       @for (type of types(); track type.name) {
         <li class="griglia__voce">
-          <a
-            class="carta"
-            [class]="'carta tipo--' + type.name"
-            [routerLink]="['/types', type.name]"
-          >
+          <a [class]="'carta tipo--' + type.name" [routerLink]="['/types', type.name]">
             <span class="carta__interno">
               <span class="carta__testata">
                 <span class="carta__pallino" aria-hidden="true"></span>

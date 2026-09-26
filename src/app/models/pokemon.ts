@@ -43,7 +43,7 @@ export interface PokemonSprites {
 }
 
 /**
- * Versione audio del verso del Pokemon.
+ * Versione audio del verso del Pokemon. Non tutte le risorse lo espongono.
  */
 export interface PokemonCries {
   latest: string | null;
@@ -52,16 +52,17 @@ export interface PokemonCries {
 
 /**
  * Risposta di `GET /api/v2/pokemon/{id o nome}`: i dettagli di un Pokemon.
+ * Altezza in decimetri, peso in ettogrammi e `base_experience` sono i valori grezzi dell'API.
  */
 export interface Pokemon {
   id: number;
   name: string;
   height: number;
   weight: number;
-  base_experience: number;
+  base_experience: number | null;
   abilities: PokemonAbility[];
   sprites: PokemonSprites;
   stats: PokemonStat[];
   types: PokemonTypeSlot[];
-  cries: PokemonCries;
+  cries?: PokemonCries;
 }

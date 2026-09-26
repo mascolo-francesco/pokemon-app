@@ -36,7 +36,7 @@ describe('TypeList', () => {
   it('should request the list of categories on creation', () => {
     fixture = TestBed.createComponent(TypeList);
 
-    const request = httpTesting.expectOne('https://pokeapi.co/api/v2/type');
+    const request = httpTesting.expectOne('https://pokeapi.co/api/v2/type?limit=100');
     expect(request.request.method).toBe('GET');
 
     request.flush(TYPES_RESPONSE);
@@ -46,7 +46,7 @@ describe('TypeList', () => {
   it('should render one link per category, skipping the unknown placeholder', async () => {
     fixture = TestBed.createComponent(TypeList);
 
-    httpTesting.expectOne('https://pokeapi.co/api/v2/type').flush(TYPES_RESPONSE);
+    httpTesting.expectOne('https://pokeapi.co/api/v2/type?limit=100').flush(TYPES_RESPONSE);
     await fixture.whenStable();
 
     const links = fixture.nativeElement.querySelectorAll('.carta') as NodeListOf<HTMLAnchorElement>;
@@ -60,7 +60,7 @@ describe('TypeList', () => {
     fixture = TestBed.createComponent(TypeList);
 
     httpTesting
-      .expectOne('https://pokeapi.co/api/v2/type')
+      .expectOne('https://pokeapi.co/api/v2/type?limit=100')
       .flush('errore', { status: 500, statusText: 'Server Error' });
     await fixture.whenStable();
 
