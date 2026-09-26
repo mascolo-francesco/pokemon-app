@@ -73,7 +73,21 @@
   color: var(--testo);
   font-size: 0.8125rem;
   font-weight: 700;
+  text-decoration: none;
   text-transform: capitalize;
+  transition:
+    border-color 240ms var(--ease-out-quint),
+    background-color 240ms var(--ease-out-quint);
+}
+
+.tipo:hover {
+  border-color: var(--colore-tipo, var(--accento));
+  background: color-mix(in srgb, var(--colore-tipo, var(--accento)) 26%, var(--superficie));
+}
+
+.tipo:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accento) 42%, transparent);
+  outline-offset: 2px;
 }
 
 /* ---------------------------------------------------------------------------
@@ -153,7 +167,7 @@
   padding: 0.0625rem 0.4375rem;
   border-radius: var(--raggio-pill);
   background: color-mix(in srgb, var(--testo) 10%, transparent);
-  color: var(--testo-tenue);
+  color: var(--testo);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.04em;

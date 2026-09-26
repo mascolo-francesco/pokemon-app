@@ -76,6 +76,18 @@ describe('PokemonDetail', () => {
     expect(image?.getAttribute('src')).toBe('https://example.com/28-artwork.png');
   });
 
+  it('should link each type back to the list of its category', async () => {
+    fixture = TestBed.createComponent(PokemonDetail);
+    fixture.componentRef.setInput('pokemonName', 'sandslash');
+    fixture.detectChanges();
+
+    httpTesting.expectOne('https://pokeapi.co/api/v2/pokemon/sandslash').flush(POKEMON_RESPONSE);
+    await fixture.whenStable();
+
+    const typeLink = (fixture.nativeElement as HTMLElement).querySelector('a.tipo');
+    expect(typeLink?.getAttribute('href')).toBe('/types/ground');
+  });
+
   it('should show an error message when the request fails', async () => {
     fixture = TestBed.createComponent(PokemonDetail);
     fixture.componentRef.setInput('pokemonName', 'sandslash');

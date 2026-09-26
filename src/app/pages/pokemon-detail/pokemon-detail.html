@@ -19,7 +19,7 @@
             <img
               class="arte__sprite"
               [src]="artwork"
-              [alt]="pokemon.name"
+              [alt]="'Artwork ufficiale di ' + pokemon.name"
               width="320"
               height="320"
               fetchpriority="high"
@@ -32,9 +32,17 @@
           <h1>{{ pokemon.name }}</h1>
           <p class="numero">N. {{ pokemon.id }}</p>
 
-          <ul class="tipi">
+          <ul class="tipi" aria-label="Tipi">
             @for (slot of pokemon.types; track slot.type.name) {
-              <li [class]="'tipo tipo--' + slot.type.name">{{ slot.type.name }}</li>
+              <li>
+                <a
+                  [class]="'tipo tipo--' + slot.type.name"
+                  [routerLink]="['/types', slot.type.name]"
+                  [attr.aria-label]="'Tipo ' + slot.type.name + ': vedi tutti i Pokémon'"
+                >
+                  {{ slot.type.name }}
+                </a>
+              </li>
             }
           </ul>
         </div>
@@ -75,7 +83,7 @@
           @for (stat of pokemon.stats; track stat.stat.name) {
             <li class="statistica">
               <span class="statistica__nome">{{ statLabel(stat.stat.name) }}</span>
-              <span class="statistica__barra">
+              <span class="statistica__barra" aria-hidden="true">
                 <span
                   class="statistica__riempimento"
                   [style.--riempimento]="statRatio(stat.base_stat)"
